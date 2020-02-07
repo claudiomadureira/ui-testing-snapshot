@@ -1,5 +1,5 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform:ios, '11.0'
+inhibit_all_warnings!
 
 target 'UITestingSnapshot' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -14,6 +14,7 @@ target 'UITestingSnapshot' do
 
   target 'UITestingSnapshotUITests' do
     # Pods for testing
+    pod 'iOSSnapshotTestCase'
   end
 
 end
