@@ -7,28 +7,38 @@
 //
 
 import XCTest
+import FBSnapshotTestCase
 @testable import UITestingSnapshot
 
-class UITestingSnapshotTests: XCTestCase {
+class UITestingSnapshotTests: FBSnapshotTestCase {
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.setUp()
+        recordMode = false
     }
 
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 50)))
+        view.backgroundColor = .green
+        if view.backgroundColor != .red {
+            FBSnapshotVerifyView(view)
         }
+    }
+    
+    func testLabelPosition() {
+        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
+        view.backgroundColor = .white
+        
+        let label = UILabel()
+        label.text = "Hi"
+        label.sizeToFit()
+        label.frame.size = .init(width: view.frame.width * 0.5, height: view.frame.height * 0.5)
+        let minutes = Calendar.current.component(.minute, from: Date())/15
+        label.center = .init(x: view.frame.midX, y: view.frame.midY * CGFloat(minutes))
+        
+        view.addSubview(label)
+        
+        FBSnapshotVerifyView(view)
     }
 
 }
